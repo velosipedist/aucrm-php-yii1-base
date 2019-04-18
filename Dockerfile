@@ -6,7 +6,6 @@ ENV ACCEPT_EULA=Y
 COPY docker-php-ext-enable /usr/bin/docker-php-ext-enable
 
 RUN sed '/jessie-updates main/d' -i /etc/apt/sources.list \
-	&& cat /app/web/php-fpm-extras.conf >> /usr/local/etc/php-fpm.conf \
 # Microsoft SQL Server Prerequisites
     && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
     && curl https://packages.microsoft.com/config/debian/8/prod.list \
