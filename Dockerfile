@@ -13,19 +13,20 @@ RUN sed '/jessie-updates main/d' -i /etc/apt/sources.list \
     && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
     && curl https://packages.microsoft.com/config/debian/8/prod.list \
         > /etc/apt/sources.list.d/mssql-release.list \
-    && apt-get update \
-    && dpkg -i /app/msodbcsql_13.1.9.2-1_amd64.deb \
+    && apt-get update && apt-get upgrade \
     && apt-get -y install autoconf build-essential python supervisor tzdata libtidy-dev \
     && apt-get install -y --no-install-recommends \
         locales \
         apt-transport-https \
+        unixodbc \
     && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
     && locale-gen \
     && apt-get -y --no-install-recommends install \
         unixodbc-dev \
         pkg-config \
         libpcre3-dev \
-        libc-client-dev libkrb5-dev
+        libc-client-dev libkrb5-dev \
+    && dpkg -i /app/msodbcsql_13.1.9.2-1_amd64.deb
 
 # PHP extensions
 RUN mkdir -p /usr/src/php/ext/redis \
