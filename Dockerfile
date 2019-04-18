@@ -7,7 +7,6 @@ COPY docker-php-ext-enable /usr/bin/docker-php-ext-enable
 COPY msodbcsql_13.1.9.2-1_amd64.deb /app
 
 RUN sed '/jessie-updates main/d' -i /etc/apt/sources.list \
-    && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean \
 # Microsoft SQL Server Prerequisites
@@ -15,6 +14,7 @@ RUN sed '/jessie-updates main/d' -i /etc/apt/sources.list \
     && curl https://packages.microsoft.com/config/debian/8/prod.list \
         > /etc/apt/sources.list.d/mssql-release.list \
     && apt-get update \
+    && dpkg -i /app/msodbcsql_13.1.9.2-1_amd64.deb
     && apt-get -y install autoconf build-essential python supervisor tzdata libtidy-dev \
     && apt-get install -y --no-install-recommends \
         locales \
