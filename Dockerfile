@@ -6,11 +6,15 @@ ENV ACCEPT_EULA=Y
 COPY docker-php-ext-enable /usr/bin/docker-php-ext-enable
 
 RUN sed '/jessie-updates main/d' -i /etc/apt/sources.list \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean \
+    && apt-get update \
 # Microsoft SQL Server Prerequisites
     && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
     && curl https://packages.microsoft.com/config/debian/8/prod.list \
         > /etc/apt/sources.list.d/mssql-release.list \
-    && apt-get update \
+#    && apt-get update \
     && apt-get -y install autoconf build-essential python supervisor tzdata libtidy-dev \
     && apt-get install -y --no-install-recommends \
         locales \
