@@ -24,8 +24,8 @@ RUN sed '/jessie-updates main/d' -i /etc/apt/sources.list \
         libpcre3-dev \
         libc-client-dev libkrb5-dev
 
-COPY msodbcsql_13.1.9.2-1_amd64.deb /app
-RUN dpkg -i /app/msodbcsql_13.1.9.2-1_amd64.deb
+COPY msodbcsql_13.1.9.2-1_amd64_debian_jessie.deb /app/
+RUN dpkg -i /app/msodbcsql_13.1.9.2-1_amd64_debian_jessie.deb
 
 # PHP extensions
 RUN mkdir -p /usr/src/php/ext/redis \
