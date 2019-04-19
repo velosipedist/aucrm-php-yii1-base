@@ -13,7 +13,7 @@ RUN sed '/jessie-updates main/d' -i /etc/apt/sources.list \
     && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
     && curl https://packages.microsoft.com/config/debian/8/prod.list \
         > /etc/apt/sources.list.d/mssql-release.list \
-    && apt-get update && apt-get upgrade \
+    && apt-get update && apt-get upgrade -y \
     && apt-get -y install autoconf build-essential python supervisor tzdata libtidy-dev \
     && apt-get install -y --no-install-recommends \
         locales \
