@@ -6,23 +6,26 @@ ENV ACCEPT_EULA=Y
 COPY docker-php-ext-enable /usr/bin/docker-php-ext-enable
 
 RUN sed '/jessie-updates main/d' -i /etc/apt/sources.list \
-# Microsoft SQL Server Prerequisites
-    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-    && curl https://packages.microsoft.com/config/debian/8/prod.list \
-        > /etc/apt/sources.list.d/mssql-release.list \
+#    && rm -rf /var/lib/apt/lists/* \
+#    && apt-get clean \
     && apt-get update \
     && apt-get -y install autoconf build-essential python supervisor tzdata libtidy-dev \
     && apt-get install -y --no-install-recommends \
         locales \
         apt-transport-https \
+        unixodbc \
     && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
     && locale-gen \
     && apt-get -y --no-install-recommends install \
-		msodbcsql \
         unixodbc-dev \
         pkg-config \
+        libc6 \
+        libc6-dev \
         libpcre3-dev \
         libc-client-dev libkrb5-dev
+
+COPY msodbcsql_13.1.9.2-1_amd64_debian_jessie.deb /app/
+RUN dpkg -i /app/msodbcsql_13.1.9.2-1_amd64_debian_jessie.deb
 
 # PHP extensions
 RUN mkdir -p /usr/src/php/ext/redis \
